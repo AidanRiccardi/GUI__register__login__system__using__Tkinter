@@ -14,14 +14,60 @@ def delete3():
 def delete4():
     screen5.destroy()
 
+def  logout():
+    screen7.destroy()
+    
+def savednow():
+    screen9 = Toplevel(screen)
+    screen9.title("Saved")
+    screen9.geometry("150x150")
+    Label(screen9, text = "Saved", fg ='green', font = ("calibri", 11)).pack()
+    Label(screen9, text = "").pack()
+
+def save():
+    filename = raw_filename.get()
+    notes = raw_notes.get()
+    data = open(filename, "w")
+    data.write(notes)
+    data.close()
+    savednow()
+
+def create_note():
+    global raw_filename
+    raw_filename = StringVar()
+    global raw_notes
+    raw_notes = StringVar()
+    
+    screen9 = Toplevel(screen)
+    screen9.title("Info")
+    screen9.geometry("350x300")
+    Label(screen9, text = "Please enter a filename for the note below : ", fg ='red', font = ("calibri", 11)).pack()
+    Label(screen9, text = "").pack()
+    Entry(screen9, textvariable = raw_filename).pack()
+    Label(screen9, text = "Please enter the content below : ", fg ='red', font = ("calibri", 11)).pack()
+    Label(screen9, text = "").pack()
+    Entry(screen9, textvariable = raw_notes).pack()
+    Label(screen9, text = "").pack()
+    Button(screen9, text = "    Save    ", command =save).pack()
+    
+
+
+def session():
+    screen8 = Toplevel(screen)
+    screen8.title("Dashboard")
+    screen8.geometry("450x450")
+    Label(screen8, text = "Welcome to the Dashboard", fg ='Blue', font = ("calibri", 11)).pack()
+    Label(screen8, text = "").pack()
+    Button(screen8, text = "Create Note", command = create_note).pack()
+    Label(screen8, text = "").pack()
+    Button(screen8, text = "View Note  ").pack()
+    Label(screen8, text = "").pack()
+    Button(screen8, text = "Delete Note").pack()
+    Label(screen8, text = "").pack()
+
 def login_success():
-    global screen3
-    screen3 = Toplevel(screen)
-    screen3.title("Success")
-    screen.geometry("150x100")
-    Label(screen3, text = "Login Sucess").pack()
-    Button (screen3, text = "OK", command = delete2).pack()
-            
+    session()
+
 def password_not_recognized():
     global screen4
     screen4 = Toplevel(screen)

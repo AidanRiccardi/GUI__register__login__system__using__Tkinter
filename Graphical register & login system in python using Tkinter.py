@@ -13,16 +13,20 @@ def delete3():
 
 def delete4():
     screen5.destroy()
+    
+def delete6():
+    screen15.destroy()
+
 
 def  logout():
     screen7.destroy()
     
 def savednow():
-    screen9 = Toplevel(screen)
-    screen9.title("Saved")
-    screen9.geometry("150x150")
-    Label(screen9, text = "Saved", fg ='green', font = ("calibri", 11)).pack()
-    Label(screen9, text = "").pack()
+    screen10 = Toplevel(screen)
+    screen10.title("Saved")
+    screen10.geometry("150x150")
+    Label(screen10, text = "Saved", fg ='green', font = ("calibri", 11)).pack()
+    Label(screen10, text = "").pack()
 
 def save():
     filename = raw_filename.get()
@@ -49,7 +53,66 @@ def create_note():
     Entry(screen9, textvariable = raw_notes).pack()
     Label(screen9, text = "").pack()
     Button(screen9, text = "    Save    ", command =save).pack()
+
+def view_note1():
+    filename1 = raw_filename1.get()
+    data = open(filename1, "r")
+    data1 = data.read()
+    screen12 = Toplevel(screen)
+    screen12.title("Notes")
+    screen12.geometry("450x450")
+    Label(screen12, text = "").pack()
+    Label(screen12, text = data1).pack()
+    data.close()
+   
+def view_note():
+    screen11 = Toplevel(screen)
+    screen11.title("Info")
+    screen11.geometry("600x600")
+    Label(screen11, text = "").pack()
+    all_files = os.listdir()
+    Label(screen11, text = "Please view file below : ", fg ='green', font = ("calibri", 11)).pack()
+    Label(screen11, text = all_files).pack()
+    global raw_filename1
+    raw_filename1 = StringVar()
+    Entry(screen11, textvariable = raw_filename1).pack()
+    Label(screen11, text = "").pack()
+    Button(screen11, command = view_note1, text = "View Note").pack()
+
+def note_not_found():
+    global screen15
+    screen15 = Toplevel(screen)
+    screen15.title("Note not found")
+    screen15.geometry("400x100")
+    Label(screen15, text = "The filename entered is not found in the directory", fg ='red', font = ("calibri", 11)).pack()
+    Button (screen15, text = "OK", command = delete6).pack()
+
+def delete_note1():
+    try:
+        filename3 = raw_filename2.get()
+        os.remove(filename3)
+        screen13 = Toplevel(screen)
+        screen13.title("Delete Note")
+        screen13.geometry("450x450")
+        Label(screen13, text = "").pack()
+        Label(screen13, text = filename3 + " removed").pack()
+    except FileNotFoundError:
+        note_not_found()
     
+def delete_note():
+    screen14 = Toplevel(screen)
+    screen14.title("Info")
+    screen14.geometry("600x600")
+    Label(screen14, text = "").pack()
+    all_files1 = os.listdir()
+    Label(screen14, text = "Please type file to be deleted below : ", fg ='green', font = ("calibri", 11)).pack()
+    Label(screen14, text = all_files1).pack()
+    global raw_filename2
+    raw_filename2= StringVar()
+    Entry(screen14, textvariable = raw_filename2).pack()
+    Label(screen14, text = "").pack()
+    Button(screen14, command = delete_note1, text = "Delete Note").pack()
+
 
 
 def session():
@@ -60,9 +123,9 @@ def session():
     Label(screen8, text = "").pack()
     Button(screen8, text = "Create Note", command = create_note).pack()
     Label(screen8, text = "").pack()
-    Button(screen8, text = "View Note  ").pack()
+    Button(screen8, text = "View Note  ", command = view_note).pack()
     Label(screen8, text = "").pack()
-    Button(screen8, text = "Delete Note").pack()
+    Button(screen8, text = "Delete Note", command = delete_note).pack()
     Label(screen8, text = "").pack()
 
 def login_success():
